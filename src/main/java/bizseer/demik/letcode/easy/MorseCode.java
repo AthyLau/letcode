@@ -17,11 +17,11 @@ public class MorseCode {
     public static int uniqueMorseRepresentations(String[] words) {
         String[] str = {".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."};
         Set<String> ret = new HashSet<>();
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb ;
         for(String word : words){
-            sb.delete(0,sb.length());
+            sb = new StringBuilder();
             for(int i = 0; i < word.length(); i++){
-                sb.append(str[word.charAt(i) - 97]);
+                sb.append(str[word.charAt(i) - 'a']);
             }
             ret.add(sb.toString());
         }
