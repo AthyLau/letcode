@@ -36,6 +36,7 @@ public class WrongCollection {
             if (cor[k] == 0 && k != 0) {
                 j = k;
             }
+            break;
         }
         return new int[]{i,j};
     }
