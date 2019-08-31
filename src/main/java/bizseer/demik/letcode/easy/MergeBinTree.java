@@ -1,10 +1,5 @@
 package bizseer.demik.letcode.easy;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Function:/**
@@ -54,12 +49,3 @@ public class MergeBinTree {
 
 }
 
-class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-
-    TreeNode(int x) {
-        val = x;
-    }
-}
