@@ -1,5 +1,7 @@
 package bizseer.demik.letcode.easy;
 
+import java.util.Arrays;
+
 /**
  * Function:
  * 我们把符合下列属性的数组 A 称作山脉：
@@ -28,9 +30,9 @@ package bizseer.demik.letcode.easy;
 public class MountainTopIndex {
 
     public static void main(String args[]){
-
+        System.out.println(peakIndexInMountainArray2(new int[]{0,5,1,0}));
     }
-    public int peakIndexInMountainArray(int[] A) {
+    public int peakIndexInMountainArray1(int[] A) {
         int k = 0;
         for (int i = 1; i < A.length; i++) {
             if(A[i] < A[i-1]){
@@ -39,5 +41,15 @@ public class MountainTopIndex {
             }
         }
         return k;
+    }
+    public static int peakIndexInMountainArray2(int[] A) {
+        int mid = A.length/2;
+        if(A[mid-1] < A[mid] && A[mid] > A[mid+1]){
+            return mid;
+        }else if(A[mid-1] < A[mid] && A[mid] < A[mid+1]){
+            return peakIndexInMountainArray2(Arrays.copyOfRange(A,mid,A.length));
+        }else{
+            return peakIndexInMountainArray2(Arrays.copyOfRange(A,0,mid+1));
+        }
     }
 }
