@@ -28,9 +28,11 @@ import java.util.Arrays;
  * @since JDK 1.8
  */
 public class ArraySub561 {
+
     public static void main(String args[]){
         arrayPairSum(new int[]{1, 3, 2, 2});
     }
+
     public static int arrayPairSum(int[] nums) {
         Arrays.sort(nums);
         int sum = 0;
