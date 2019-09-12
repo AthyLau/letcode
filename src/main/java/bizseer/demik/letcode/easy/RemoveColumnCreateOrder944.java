@@ -1,7 +1,5 @@
 package bizseer.demik.letcode.easy;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Function:
