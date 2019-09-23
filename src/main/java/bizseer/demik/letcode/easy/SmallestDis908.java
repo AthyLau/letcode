@@ -39,8 +39,8 @@ public class SmallestDis908 {
          *
          *        dev-a -> a-1 -> a-2
          *      /                 /
-         * dev                  +
-         *      \             /
+         * dev                  +                               merge dev -> dev
+         *      \             /                                 /
          *        dev-b -> b-1 -> ab-1(a-2+b-1,在b-1分支上合并a-2)
          *
          */
