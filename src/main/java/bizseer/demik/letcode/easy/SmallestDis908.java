@@ -32,10 +32,11 @@ import java.util.Arrays;
  */
 public class SmallestDis908 {
     public static void main(String args[]) {
-
+        // git 测试 dev-a
+        System.out.println(smallestRangeI(new int[]{1}, 0));
     }
 
-    public int smallestRangeI(int[] A, int K) {
+    private static int smallestRangeI(int[] A, int K) {
         int max = A[0];
         int min = A[0];
         for (int i : A) {
