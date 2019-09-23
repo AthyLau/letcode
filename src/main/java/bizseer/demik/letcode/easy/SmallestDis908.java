@@ -32,7 +32,17 @@ import java.util.Arrays;
  */
 public class SmallestDis908 {
     public static void main(String args[]) {
-        // git 测试 dev-b
+        // git 测试 dev-b -> b-1
+        /**
+         * git练习
+         *
+         *        dev-a -> a-1 -> a-2
+         *      /                 /
+         * dev                  +
+         *      \             /
+         *        dev-b -> b-1 -> ab-1(a-2+b-1,在b-1分支上合并a-2)
+         *
+         */
         System.out.println(smallestRangeI(new int[]{1}, 0));
     }
 
