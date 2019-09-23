@@ -32,7 +32,7 @@ import java.util.Arrays;
  */
 public class SmallestDis908 {
     public static void main(String args[]) {
-        // git 测试 dev-a -> a-1
+        // git 测试 dev-a -> a-1 -> a-2
         /**
          * git练习
          *
