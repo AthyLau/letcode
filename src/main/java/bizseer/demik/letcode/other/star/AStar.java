@@ -29,10 +29,9 @@ public class AStar {
 
     public static void start() {
         addNodeToList(startNode, open);
-        int index = 0;
-        while (open.isEmpty()) {
-            Node now = open.get(index);
-            close.add(now);
+        while (!open.isEmpty()) {
+            Node now = openGetOne();
+            addNodeToList(now, close);
             List<Node> nearNodes = getNearNode(now);
             if (isNodeInList(endNode, nearNodes)) {
                 open.add(endNode);
@@ -50,14 +49,23 @@ public class AStar {
                     sortOpenList();
                 }
             }
-            index ++;
         }
+    }
+
+    public static Node openGetOne() {
+        if (open.isEmpty()) {
+            return null;
+        }
+        sortOpenList();
+        Node node = open.get(0);
+        open.remove(node);
+        return node;
     }
 
     public static void getPath() {
         Node node = endNode;
         while (node != null) {
-            System.out.println(node.toString());
+            System.out.println(node.getCoord().getX() + " , " + node.getCoord().getY());
             node = node.getFather();
         }
     }
@@ -84,7 +92,7 @@ public class AStar {
            || (n.getCoord().getX() - 1 == node.getCoord().getX() && n.getCoord().getY().equals(node.getCoord().getY()))
            || (n.getCoord().getX() - 1 == node.getCoord().getX() && n.getCoord().getY() + 1 == node.getCoord().getY())
            || (n.getCoord().getX().equals(node.getCoord().getX()) && n.getCoord().getY() - 1 == node.getCoord().getY())
-           || (n.getCoord().getX() - 1 == node.getCoord().getX() && n.getCoord().getY() + 1 == (node.getCoord().getY()))
+           || (n.getCoord().getX().equals(node.getCoord().getX()) && n.getCoord().getY() + 1 == (node.getCoord().getY()))
            || (n.getCoord().getX() + 1 == node.getCoord().getX() && n.getCoord().getY() - 1 == node.getCoord().getY())
            || (n.getCoord().getX() + 1 == node.getCoord().getX() && n.getCoord().getY().equals(node.getCoord().getY()))
            || (n.getCoord().getX() + 1 == node.getCoord().getX() && n.getCoord().getY() + 1 == node.getCoord().getY())
@@ -113,8 +121,8 @@ public class AStar {
             }
         }
         testData.setTerrains(terrains);
-        testData.setStart(new Coord(2, 3));
-        testData.setEnd(new Coord(6, 3));
+        testData.setStart(new Coord(1, 2));
+        testData.setEnd(new Coord(5, 2));
         return testData;
     }
 
@@ -130,7 +138,7 @@ public class AStar {
                     startNode.setTerrain(maps[i][j]);
                 } else if (coord.equals(end)) {
                     name = "end";
-                    endNode.setCoord(start);
+                    endNode.setCoord(end);
                     endNode.setName(name);
                     endNode.setTerrain(maps[i][j]);
                 }
