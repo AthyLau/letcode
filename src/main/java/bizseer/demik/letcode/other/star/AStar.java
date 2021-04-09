@@ -21,13 +21,13 @@ public class AStar {
     private static final Integer CKey = 14;
 
     public static void main(String args[]) {
-        TestData testData = getTestMap();
+        TestData testData = getTestMapEasy();
         getMapByTer(testData.getTerrains(), testData.getStart(), testData.getEnd());
         start();
         getPath();
     }
 
-    public static void start() {
+    private static void start() {
         addNodeToList(startNode, open);
         while (!open.isEmpty()) {
             Node now = openGetOne();
@@ -39,10 +39,12 @@ public class AStar {
                 break;
             }
             for (Node nearNode : nearNodes) {
-                if (nearNode.getTerrain().getCanMove() == -1 || isNodeInList(nearNode, close)) {
+                if (nearNode.getTerrain().getCanMove() == -1
+                        || isNodeInList(nearNode, close)) {
                     continue;
                 }
-                if (addNodeToList(nearNode, open) || now.getG() + getGPay(now, nearNode) < nearNode.getG()) {
+                if ((addNodeToList(nearNode, open)
+                        || now.getG() + getGPay(now, nearNode) < nearNode.getG())) {
                     nearNode.setFather(now);
                     nearNode.setG(getGPay(now, nearNode));
                     nearNode.setH(getHPay(now, nearNode));
@@ -52,17 +54,15 @@ public class AStar {
         }
     }
 
-    public static Node openGetOne() {
-        if (open.isEmpty()) {
-            return null;
-        }
+
+    private static Node openGetOne() {
         sortOpenList();
         Node node = open.get(0);
         open.remove(node);
         return node;
     }
 
-    public static void getPath() {
+    private static void getPath() {
         Node node = endNode;
         while (node != null) {
             System.out.println(node.getCoord().getX() + " , " + node.getCoord().getY());
@@ -70,11 +70,11 @@ public class AStar {
         }
     }
 
-    public static Integer getHPay(Node now, Node nearNode) {
-        return UDLFKey * (now.getCoord().getY() - nearNode.getCoord().getY() + now.getCoord().getX() - nearNode.getCoord().getY());
+    private static Integer getHPay(Node now, Node nearNode) {
+        return Math.abs(UDLFKey * (now.getCoord().getY() - nearNode.getCoord().getY() + now.getCoord().getX() - nearNode.getCoord().getY()));
     }
 
-    public static Integer getGPay(Node now, Node nearNode) {
+    private static Integer getGPay(Node now, Node nearNode) {
         int pay = now.getCoord().getY() - nearNode.getCoord().getY() + now.getCoord().getX() - nearNode.getCoord().getY();
         if (pay == 1) {
             return UDLFKey;
@@ -82,24 +82,24 @@ public class AStar {
         return CKey;
     }
 
-    public static boolean addNodeToList(Node node, List<Node> nodes) {
+    private static boolean addNodeToList(Node node, List<Node> nodes) {
         return !isNodeInList(node, nodes) && nodes.add(node) && sortOpenList();
     }
 
-    public static List<Node> getNearNode(Node node) {
+    private static List<Node> getNearNode(Node node) {
         return nodeMaps.stream().filter(n ->
-           (n.getCoord().getX() - 1 == node.getCoord().getX() && n.getCoord().getY() - 1 == node.getCoord().getY())
-           || (n.getCoord().getX() - 1 == node.getCoord().getX() && n.getCoord().getY().equals(node.getCoord().getY()))
-           || (n.getCoord().getX() - 1 == node.getCoord().getX() && n.getCoord().getY() + 1 == node.getCoord().getY())
-           || (n.getCoord().getX().equals(node.getCoord().getX()) && n.getCoord().getY() - 1 == node.getCoord().getY())
-           || (n.getCoord().getX().equals(node.getCoord().getX()) && n.getCoord().getY() + 1 == (node.getCoord().getY()))
-           || (n.getCoord().getX() + 1 == node.getCoord().getX() && n.getCoord().getY() - 1 == node.getCoord().getY())
-           || (n.getCoord().getX() + 1 == node.getCoord().getX() && n.getCoord().getY().equals(node.getCoord().getY()))
-           || (n.getCoord().getX() + 1 == node.getCoord().getX() && n.getCoord().getY() + 1 == node.getCoord().getY())
+                (n.getCoord().getX() - 1 == node.getCoord().getX() && n.getCoord().getY() - 1 == node.getCoord().getY())
+                        || (n.getCoord().getX() - 1 == node.getCoord().getX() && n.getCoord().getY().equals(node.getCoord().getY()))
+                        || (n.getCoord().getX() - 1 == node.getCoord().getX() && n.getCoord().getY() + 1 == node.getCoord().getY())
+                        || (n.getCoord().getX().equals(node.getCoord().getX()) && n.getCoord().getY() - 1 == node.getCoord().getY())
+                        || (n.getCoord().getX().equals(node.getCoord().getX()) && n.getCoord().getY() + 1 == (node.getCoord().getY()))
+                        || (n.getCoord().getX() + 1 == node.getCoord().getX() && n.getCoord().getY() - 1 == node.getCoord().getY())
+                        || (n.getCoord().getX() + 1 == node.getCoord().getX() && n.getCoord().getY().equals(node.getCoord().getY()))
+                        || (n.getCoord().getX() + 1 == node.getCoord().getX() && n.getCoord().getY() + 1 == node.getCoord().getY())
         ).collect(Collectors.toList());
     }
 
-    public static boolean isNodeInList(Node node, List<Node> nodes) {
+    private static boolean isNodeInList(Node node, List<Node> nodes) {
         for (Node nowNode : nodes) {
             if (nowNode.getCoord().equals(node.getCoord())) {
                 return true;
@@ -108,7 +108,7 @@ public class AStar {
         return false;
     }
 
-    public static TestData getTestMap() {
+    private static TestData getTestMapEasy() {
         TestData testData = new TestData();
         Terrain[][] terrains = new Terrain[7][5];
         for (int i = 0; i < terrains.length; i++) {
@@ -126,7 +126,8 @@ public class AStar {
         return testData;
     }
 
-    public static List<Node> getMapByTer(Terrain[][] maps, Coord start, Coord end) {
+
+    private static List<Node> getMapByTer(Terrain[][] maps, Coord start, Coord end) {
         for (int i = 0; i < maps.length; i++) {
             for (int j = 0; j < maps[i].length; j++) {
                 Coord coord = new Coord(i, j);
@@ -148,9 +149,42 @@ public class AStar {
         return nodeMaps;
     }
 
-    public static boolean sortOpenList() {
+    private static boolean sortOpenList() {
         open = open.stream().sorted(Comparator.comparing(Node::getF)).collect(Collectors.toList());
         return true;
+    }
+
+    public static boolean canCornerMove(Node start, Node end, List<Node> startNearNodes) {
+        if (!start.getCoord().getX().equals(end.getCoord().getX()) && !start.getCoord().getY().equals(end.getCoord().getY())) {
+            for (Node node : startNearNodes) {
+                if (!node.getTerrain().isCanAngles() && (node.getCoord().equals(new Coord(start.getCoord().getX(), end.getCoord().getY()))
+                        || node.getCoord().equals(new Coord(end.getCoord().getX(), start.getCoord().getY())))) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public static TestData getTestMapHard() {
+        TestData testData = new TestData();
+        Terrain[][] terrains = new Terrain[7][5];
+        for (int i = 0; i < terrains.length; i++) {
+            for (int j = 0; j < terrains[i].length; j++) {
+                if (j == 1 && (i == 1 || i == 2 || i == 3 || i == 4 || i == 5)) {
+                    terrains[i][j] = Terrain.MOUNTAIN;
+                } else if (i == 5 && (j == 2 || j == 3)) {
+                    terrains[i][j] = Terrain.RIVER;
+                } else {
+                    terrains[i][j] = Terrain.PLAIN;
+                }
+            }
+        }
+        testData.setTerrains(terrains);
+        testData.setStart(new Coord(0, 4));
+        testData.setEnd(new Coord(6, 0));
+        return testData;
     }
 }
 

@@ -24,10 +24,7 @@ public class SingleLinkLoop {
         // listSize - fast 第一次相遇 slow 时跳的次数 n
         // ( list - n )
         /**
-         *          A ----> B ----> C ----> D ----> E
-         *                          |               |
-         *                          |               |
-         *                          <---------------
+         *          A ----> B ----> C ----> D ----> E ----> F
          */
         listNode1.afterNode = listNode2;
         listNode2.afterNode = listNode3;
@@ -99,7 +96,7 @@ public class SingleLinkLoop {
         return slow;
     }
 
-    // 输出链表中的倒数第K个节点 == 输出链表中的正数第 K - 1 个节点 （跟有序链表查中位数一样的道理）
+    // 输出链表中的倒数第K个节点、输出链表中的正数第 K - 1 个节点
     private static ListNode getDescESCSpecifiedNode(ListNode root,int k) {
         if (root == null) {
             return null;
